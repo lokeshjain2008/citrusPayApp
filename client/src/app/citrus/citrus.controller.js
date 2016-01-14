@@ -4,7 +4,7 @@
   angular
     .module('citrus')
     .controller('CitrusController',
-      function($scope, $log, tweets) {
+      function($scope, $log, $interval, tweets) {
 
         var vm = this;
         vm.accounts = [
@@ -16,27 +16,39 @@
         vm.allTweets = [];
         vm.loading = true;
 
-        vm.accounts.forEach(function getTweetsForAccount(account) {
-          var tweetobject = {};
-          tweetobject.name = account;
-          tweets.query({
-            user: account
-          }, function success(data) {
-            tweetobject.tweets = data;
-            vm.loading = false;
-            vm.allTweets.push(tweetobject);
-          }, function errorFunction(error) {
-            $log.log(error);
+        //////////////Action declarations ////////////////////////////;
+
+        vm.createTweetSteam = createTweetSteamFun;
+        vm.init = initFun;
+
+        //////////////// Action definations //////////////////////;
+        function createTweetSteamFun() {
+          vm.accounts.forEach(function getTweetsForAccount(account) {
+            var tweetobject = {};
+            tweetobject.name = account;
+            tweets.query({
+              user: account
+            }, function success(data) {
+              tweetobject.tweets = data;
+              vm.loading = false;
+              vm.allTweets.push(tweetobject);
+            }, function errorFunction(error) {
+              $log.log(error);
+            });
+
           });
+        }
 
-        });
+        function initFun() {
+          vm.createTweetSteam();
+        }
 
-        // function ErrorFunction(err) {
-        //   $log.error(err);
-        // }
+        vm.tweetTicker = $interval(function() {
+          vm.createTweetSteam();
+        }, 120 * 1000);
 
-      }
-    );
+        //basic initialization for the project
+        vm.init();
 
-
+      });
 })(angular);
