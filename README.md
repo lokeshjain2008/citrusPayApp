@@ -9,8 +9,8 @@ Creating an APP using
 
 ----
 ## Current progress
-[X] Showing tweets for the twitter handles(4).
-[X] Will refresh tweets after every 2 secs.
+[x] Showing tweets for the twitter handles(4).
+[x] Will refresh tweets after every 2 secs.
 
 ---
 ## Yet to do
