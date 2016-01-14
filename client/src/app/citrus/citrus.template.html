@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-xs-12" data-ng-show="cit.loading">
+    Loading your tweets...
+  </div>
+  <div data-ng-repeat="accountTweets in cit.allTweets">
+    <div class="col-xs-12 col-md-3 text-center">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          {{accountTweets.name}}
+        </div>
+        <div class="panel-body">
+          <div data-ng-repeat="tweet in accountTweets.tweets">
+            <tweet-banner tw="tweet"></tweet-banner>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
